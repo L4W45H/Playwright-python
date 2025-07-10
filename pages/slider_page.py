@@ -1,10 +1,11 @@
 from .base_page import BasePage
 
 class SliderPage(BasePage):
+    slider = '#slider-range'
+    amount = '#amount'
     def __init__(self, page):
         super().__init__(page)
-        self.slider = '#slider-range'
-        self.amount = '#amount'
+
 
     def move_slider(self, min_val, max_val):
         self.page.wait_for_selector(self.slider + ' span')

@@ -1,10 +1,11 @@
 from .base_page import BasePage
 
 class PaginationWebTablePage(BasePage):
+    table_selector = '#productTable'
+    pagination_selector = '#pagination li a'
     def __init__(self, page):
         super().__init__(page)
-        self.table_selector = '#productTable'
-        self.pagination_selector = '#pagination li a'
+
 
     def get_all_products_and_total_price(self):
         all_products = []

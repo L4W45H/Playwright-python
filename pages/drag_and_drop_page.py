@@ -1,10 +1,11 @@
 from .base_page import BasePage
 
 class DragAndDropPage(BasePage):
+    draggable = '#draggable'
+    droppable = '#droppable'
     def __init__(self, page):
         super().__init__(page)
-        self.draggable = '#draggable'
-        self.droppable = '#droppable'
+
 
     def drag_and_drop(self):
         self.page.wait_for_selector(self.draggable)

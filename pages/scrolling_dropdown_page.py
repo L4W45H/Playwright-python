@@ -1,9 +1,10 @@
 from .base_page import BasePage
 
 class ScrollingDropdownPage(BasePage):
+    dropdown = '#country'
     def __init__(self, page):
         super().__init__(page)
-        self.dropdown = '#country'
+
 
     def open_dropdown(self):
         self.page.wait_for_selector(self.dropdown)

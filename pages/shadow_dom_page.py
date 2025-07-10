@@ -1,10 +1,11 @@
 from .base_page import BasePage
 
 class ShadowDomPage(BasePage):
+    shadow_host = '#shadow_host'
+    input_selector = 'input[type="text"]'
     def __init__(self, page):
         super().__init__(page)
-        self.shadow_host = '#shadow_host'
-        self.input_selector = 'input[type="text"]'
+
 
     def fill_shadow_input(self, value):
         self.page.wait_for_selector(self.shadow_host)

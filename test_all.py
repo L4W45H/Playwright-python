@@ -7,6 +7,7 @@ from pages.upload_page import UploadPage  # type: ignore
 from pages.pagination_web_table_page import PaginationWebTablePage  # type: ignore
 from pages.svg_elements_page import SVGElementsPage  # type: ignore
 import os
+from PIL import Image, ImageChops
 
 
 
@@ -48,10 +49,24 @@ def test_pag_table_and_total_price(page):
     rounded_price = round(result['total_price'])
     print('Total price:', rounded_price)
 
+def images_are_equal(img1_path, img2_path):
+    img1 = Image.open(img1_path).convert('RGB')
+    img2 = Image.open(img2_path).convert('RGB')
+    if img1.size != img2.size:
+        return False
+    diff = ImageChops.difference(img1, img2)
+    return not diff.getbbox()
+
 def test_svg_elements_screenshot_comparison(page):
     svg_page = SVGElementsPage(page)
+    files_dir = os.path.join(os.path.dirname(__file__), 'files')
     svg_page.goto()
-    svgs = svg_page.get_all_svg_elements()
-    assert len(svgs) > 0
-    screenshots = svg_page.screenshot_all_svgs(os.path.join(os.path.dirname(__file__), 'files'))
-    print('SVG screenshots:', screenshots) 
+    results = svg_page.compare_svgs_with_golden(files_dir, tolerance_percent=10.0, save_diff=True)
+    for screenshot, golden, percent_diff, is_within, diff_path in results:
+        if percent_diff is None:
+            print(f"Golden image not found: {golden}")
+        elif not is_within:
+            print(f"Difference {percent_diff:.2f}% exceeds tolerance for {screenshot} vs {golden}")
+            if diff_path:
+                print(f"Diff image saved at: {diff_path}")
+    assert all(is_within for _, _, _, is_within, _ in results), "Some SVG screenshots differ from golden images beyond tolerance!" 

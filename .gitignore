@@ -78,4 +78,4 @@ Thumbs.db
 *.log
 
 # Local files
-files/ 
+#files/

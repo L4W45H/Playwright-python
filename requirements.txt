@@ -1,3 +1,5 @@
 playwright
 pytest
-requests 
+requests
+pytest-html
+pillow

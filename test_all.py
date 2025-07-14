@@ -69,4 +69,4 @@ def test_svg_elements_screenshot_comparison(page):
             print(f"Difference {percent_diff:.2f}% exceeds tolerance for {screenshot} vs {golden}")
             if diff_path:
                 print(f"Diff image saved at: {diff_path}")
-    assert all(is_within for _, _, _, is_within, _ in results), "Some SVG screenshots differ from golden images beyond tolerance!" 
+    assert all(is_within for _, _, _, is_within, _ in results), "Some SVG screenshots differ from golden images beyond tolerance!"
